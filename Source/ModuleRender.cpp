@@ -31,7 +31,7 @@ bool ModuleRender::Init()
 	SDL_GL_CreateContext(App->window->window);
 
 
-	glewInit();
+	//glewInit();
 
 
 	return true;

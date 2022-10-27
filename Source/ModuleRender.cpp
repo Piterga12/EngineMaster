@@ -3,6 +3,9 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "SDL.h"
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
 
 ModuleRender::ModuleRender()
 {
@@ -25,7 +28,10 @@ bool ModuleRender::Init()
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
-	//glewInit();
+	SDL_GL_CreateContext(App->window->window);
+
+
+	glewInit();
 
 
 	return true;
@@ -39,7 +45,7 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-
+	//ImGui_ImplOpenGL3_RenderDrawData();
 	return UPDATE_CONTINUE;
 }
 

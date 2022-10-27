@@ -14,6 +14,7 @@ enum update_status
 };
 
 // Configuration -----------
+#define GLSL_VERSION "version 460"
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 #define FULLSCREEN false

@@ -4,11 +4,12 @@
 #include "Globals.h"
 #include "Module.h"
 
-class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleRenderExercise;
+class ModuleEditor;
+class ModuleRender;
 
 class Application
 {
@@ -23,6 +24,7 @@ public:
 
 public:
 	ModuleRender* renderer = nullptr;
+	ModuleEditor* editor = nullptr;
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
 

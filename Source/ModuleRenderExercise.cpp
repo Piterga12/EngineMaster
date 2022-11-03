@@ -1,23 +1,23 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleRender.h"
+#include "ModuleRenderExercise.h"
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-ModuleRender::ModuleRender()
+ModuleRenderExercise::ModuleRenderExercise()
 {
 }
 
 // Destructor
-ModuleRender::~ModuleRender()
+ModuleRenderExercise::~ModuleRenderExercise()
 {
 }
 
 // Called before render is available
-bool ModuleRender::Init()
+bool ModuleRenderExercise::Init()
 {
 	LOG("Creating Renderer context");
 	context = SDL_GL_CreateContext(App->window->window);
@@ -39,25 +39,25 @@ bool ModuleRender::Init()
 	return true;
 }
 
-update_status ModuleRender::PreUpdate()
+update_status ModuleRenderExercise::PreUpdate()
 {
 	return UPDATE_CONTINUE;
 }
 
 // Called every draw update
-update_status ModuleRender::Update()
+update_status ModuleRenderExercise::Update()
 {
 	//ImGui_ImplOpenGL3_RenderDrawData();
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRender::PostUpdate()
+update_status ModuleRenderExercise::PostUpdate()
 {
 	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
-bool ModuleRender::CleanUp()
+bool ModuleRenderExercise::CleanUp()
 {
 	LOG("Destroying renderer");
 
@@ -66,7 +66,7 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-void ModuleRender::WindowResized(unsigned width, unsigned height)
+void ModuleRenderExercise::WindowResized(unsigned width, unsigned height)
 {
 }
 

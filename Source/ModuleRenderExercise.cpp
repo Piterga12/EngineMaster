@@ -2,8 +2,8 @@
 #include "Application.h"
 #include "ModuleProgram.h"
 
-#define VERT_SHADER "default_vertex.glsl"
-#define FRAG_SHADER "default_fragment.glsl"
+#define VERT_SHADER "VertexShader.glsl"
+#define FRAG_SHADER "FragmentShader.glsl"
 
 ModuleRenderExercise::ModuleRenderExercise()
 {

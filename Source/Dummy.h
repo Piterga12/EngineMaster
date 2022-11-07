@@ -6,13 +6,13 @@ class ModuleDummy : public Module
 {
 	bool Init()
 	{
-		LOG("Dummy Init!");
+		MYLOG("Dummy Init!");
 		return true;
 	}
 
 	bool CleanUp()
 	{
-		LOG("Dummy CleanUp!");
+		MYLOG("Dummy CleanUp!");
 		return true;
 	}
 };

@@ -1,22 +1,21 @@
 #pragma once
 
 #include "Module.h"
-#include "Globals.h"
+#include <string>
+#include <GL\glew.h>
 
-class ModuleProgram : public Module {
+class ModuleProgram : public Module
+{
 public:
-	//bool Start() override;
-	bool CleanUp() override;
+	ModuleProgram();
+	~ModuleProgram();
 
-	void LoadShaderBinFile();
-	void LoadShaders();
-	unsigned CreateProgram(const char* shaderFile, const char* vertexSnippets = "vertex", const char* fragmentSnippets = "fragment");
-	unsigned CreateComputeProgram(const char* shaderFile, const char* computeSnippets = "compute");
-	void DeleteProgram(unsigned int idProgram);
+	static const std::string SHADER_FOLDER_PATH;
 
-public:
-	const char* filePath = "Library/shadersBin";
-	int programId = 0;
-	// shaders
-	
+	GLuint CreateProgramFromShaders(const std::string& vertexShaderName, const std::string& fragmentShaderName);
+
+private:
+	std::string ReadShaderFile(const std::string& fileName);
+	GLuint CompileShader(GLenum shaderType, const std::string& shaderSource);
+	GLuint CreateProgram(GLuint vertexShader, GLuint fragmentShader);
 };

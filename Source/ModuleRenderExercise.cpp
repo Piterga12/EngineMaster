@@ -1,72 +1,47 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleRenderExercise.h"
-#include "ModuleWindow.h"
-#include "SDL.h"
-#include "imgui.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
+#include "Application.h"
+#include "ModuleProgram.h"
+
+#define VERT_SHADER "default_vertex.glsl"
+#define FRAG_SHADER "default_fragment.glsl"
 
 ModuleRenderExercise::ModuleRenderExercise()
 {
 }
 
-// Destructor
 ModuleRenderExercise::~ModuleRenderExercise()
 {
+	glDeleteBuffers(1, &vbo);
 }
 
-// Called before render is available
 bool ModuleRenderExercise::Init()
 {
-	LOG("Creating Renderer context");
-	context = SDL_GL_CreateContext(App->window->window);
+	float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6); 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
-	SDL_GL_CreateContext(App->window->window);
-
-
-	//glewInit();
-
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
 
 	return true;
 }
 
-update_status ModuleRenderExercise::PreUpdate()
+bool ModuleRenderExercise::Start()
 {
-	return UPDATE_CONTINUE;
+	program = App->program->CreateProgramFromShaders(VERT_SHADER, FRAG_SHADER);
+
+	return true;
 }
 
-// Called every draw update
 update_status ModuleRenderExercise::Update()
 {
-	//ImGui_ImplOpenGL3_RenderDrawData();
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	glUseProgram(program);
+
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
 	return UPDATE_CONTINUE;
 }
-
-update_status ModuleRenderExercise::PostUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
-// Called before quitting
-bool ModuleRenderExercise::CleanUp()
-{
-	LOG("Destroying renderer");
-
-	//Destroy window
-
-	return true;
-}
-
-void ModuleRenderExercise::WindowResized(unsigned width, unsigned height)
-{
-}
-

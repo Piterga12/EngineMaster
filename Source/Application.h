@@ -4,12 +4,13 @@
 #include "Globals.h"
 #include "Module.h"
 
+class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
+class ModuleProgram;
 class ModuleRenderExercise;
 class ModuleEditor;
-class ModuleRender;
 class ModuleDebugDraw;
 
 class Application
@@ -20,15 +21,17 @@ public:
 	~Application();
 
 	bool Init();
+	bool Start();
 	update_status Update();
 	bool CleanUp();
 
 public:
 	ModuleRender* renderer = nullptr;
-	ModuleRenderExercise* rendererExercise = nullptr;
-	ModuleEditor* editor = nullptr;
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
+	ModuleProgram* program = nullptr;
+	ModuleRenderExercise* rendererExercise = nullptr;
+	ModuleEditor* editor = nullptr;
 	ModuleDebugDraw* debugDraw = nullptr;
 
 private:

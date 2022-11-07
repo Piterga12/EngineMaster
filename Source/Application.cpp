@@ -3,6 +3,7 @@
 #include "ModuleWindow.h"
 #include "ModuleEditor.h"
 #include "ModuleRender.h"
+#include "ModuleProgram.h"
 #include "ModuleRenderExercise.h"
 #include "ModuleInput.h"
 #include "ModuleDebugDraw.h"
@@ -16,6 +17,7 @@ Application::Application()
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(editor = new ModuleEditor());
 	modules.push_back(renderer = new ModuleRender());
+	modules.push_back(program = new ModuleProgram());
 	modules.push_back(rendererExercise = new ModuleRenderExercise());
 	modules.push_back(debugDraw = new ModuleDebugDraw());
 }
@@ -38,6 +40,15 @@ bool Application::Init()
 	return ret;
 }
 
+bool Application::Start()
+{
+	bool ret = true;
+
+	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
+		ret = (*it)->Start();
+
+	return ret;
+}
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;

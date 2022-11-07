@@ -1,50 +1,92 @@
 #include "ModuleProgram.h"
+#include <fstream>
 
-#include "Globals.h"
-#include "Application.h"
+const std::string ModuleProgram::SHADER_FOLDER_PATH = "shaders/";
 
-#include "Application.h"
-#include "ModuleRender.h"
-#include "ModuleWindow.h"
-#include <string>
-
-
-void ModuleProgram::LoadShaderBinFile() {
-	// Clean file on Start
-
+ModuleProgram::ModuleProgram()
+{
 }
 
-void ModuleProgram::LoadShaders() {
-
-
-	LOG("Shaders loaded in ");
-}
-unsigned ModuleProgram::CreateProgram(const char* shaderFile, const char* vertexSnippets, const char* fragmentSnippets) {
-	LOG("Creating program...");
-
-	// Compile the shaders and delete them at the end
-	
-
-	return programId;
+ModuleProgram::~ModuleProgram()
+{
 }
 
-unsigned ModuleProgram::CreateComputeProgram(const char* shaderFile, const char* computeSnippets) {
-	LOG("Creating program...");
+GLuint ModuleProgram::CreateProgramFromShaders(const std::string& vertexShaderName, const std::string& fragmentShaderName)
+{
+	std::string vertexShaderCode = ReadShaderFile(vertexShaderName);
+	std::string fragmentShaderCode = ReadShaderFile(fragmentShaderName);
 
-	
-	return programId;
+	GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexShaderCode);
+	GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentShaderCode);
+
+	GLuint program = CreateProgram(vertexShader, fragmentShader);
+
+	return program;
 }
 
-/*bool ModuleProgram::Start() {
-	LoadShaders();
-	return true;
-}*/
+std::string ModuleProgram::ReadShaderFile(const std::string& fileName)
+{
+	std::ifstream file;
+	std::string fileContents = "";
+	std::string fileLine;
 
-void ModuleProgram::DeleteProgram(unsigned int IdProgram) {
-	//glDeleteProgram(IdProgram);
+	file.open(SHADER_FOLDER_PATH + fileName);
+
+	if (file.is_open()) {
+		while (std::getline(file, fileLine)) {
+			fileContents += fileLine + "\n";
+		}
+		file.close();
+	}
+
+	return fileContents;
 }
 
-bool ModuleProgram::CleanUp() {
-	//UnloadShaders();
-	return true;
+GLuint ModuleProgram::CompileShader(GLenum shaderType, const std::string& shaderSource)
+{
+	GLuint shaderID = glCreateShader(shaderType);
+	const char* sourceAsChars = shaderSource.c_str();
+	glShaderSource(shaderID, 1, &sourceAsChars, 0);
+	glCompileShader(shaderID);
+
+	int res = GL_FALSE;
+	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &res);
+	if (res == GL_FALSE) {
+		int len = 0;
+		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &len);
+		if (len > 0) {
+			int written = 0;
+			char* info = (char*)malloc(len);
+			glGetShaderInfoLog(shaderID, len, &written, info);
+			LOG("Log Info: %s", info);
+			free(info);
+		}
+	}
+	return shaderID;
+}
+
+GLuint ModuleProgram::CreateProgram(GLuint vertexShader, GLuint fragmentShader)
+{
+	GLuint programID = glCreateProgram();
+	glAttachShader(programID, vertexShader);
+	glAttachShader(programID, fragmentShader);
+	glLinkProgram(programID);
+
+	int res = GL_FALSE;
+	glGetProgramiv(programID, GL_LINK_STATUS, &res);
+	if (res == GL_FALSE) {
+		int len = 0;
+		glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &len);
+		if (len > 0)
+		{
+			int written = 0;
+			char* info = (char*)malloc(len);
+			glGetProgramInfoLog(programID, len, &written, info);
+			LOG("Program Log Info: %s", info);
+			free(info);
+		}
+	}
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	return programID;
 }

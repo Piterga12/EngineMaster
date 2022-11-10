@@ -10,8 +10,7 @@ public:
 	ModuleProgram();
 	~ModuleProgram();
 
-	static const std::string SHADER_FOLDER_PATH;
-
+	static const std::string FOLDER_SHADERS;
 	GLuint CreateProgramFromShaders(const std::string& vertexShaderName, const std::string& fragmentShaderName);
 
 private:

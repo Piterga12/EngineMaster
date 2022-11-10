@@ -1,7 +1,7 @@
 #include "ModuleProgram.h"
 #include <fstream>
 
-const std::string ModuleProgram::SHADER_FOLDER_PATH = "shaders/";
+const std::string ModuleProgram::FOLDER_SHADERS = "shaders/";
 
 ModuleProgram::ModuleProgram()
 {
@@ -24,13 +24,13 @@ GLuint ModuleProgram::CreateProgramFromShaders(const std::string& vertexShaderNa
 	return program;
 }
 
-std::string ModuleProgram::ReadShaderFile(const std::string& fileName)
+std::string ModuleProgram::ReadShaderFile(const std::string& shaderName)
 {
 	std::ifstream file;
 	std::string fileContents = "";
 	std::string fileLine;
 
-	file.open(SHADER_FOLDER_PATH + fileName);
+	file.open(FOLDER_SHADERS + shaderName);
 
 	if (file.is_open()) {
 		while (std::getline(file, fileLine)) {

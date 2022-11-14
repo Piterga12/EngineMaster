@@ -15,13 +15,13 @@ ModuleInput::~ModuleInput()
 // Called before render is available
 bool ModuleInput::Init()
 {
-    MYLOG("Init SDL input event system");
+    PERSLOG("Init SDL input event system");
     bool ret = true;
     SDL_Init(0);
 
     if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
     {
-        MYLOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+        PERSLOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
         ret = false;
     }
 
@@ -57,7 +57,7 @@ update_status ModuleInput::Update()
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
-    MYLOG("Quitting SDL input event subsystem");
+    PERSLOG("Quitting SDL input event subsystem");
     SDL_QuitSubSystem(SDL_INIT_EVENTS);
     return true;
 }

@@ -30,39 +30,39 @@ int main(int argc, char** argv)
 		{
 		case MAIN_CREATION:
 
-			MYLOG("Application Creation --------------");
+			PERSLOG("Application Creation --------------");
 			App = new Application();
 			state = MAIN_INIT;
 			break;
 
 		case MAIN_INIT:
 
-			MYLOG("Application Init --------------");
+			PERSLOG("Application Init --------------");
 			if (App->Init() == false)
 			{
-				MYLOG("Application Init exits with error -----");
+				PERSLOG("Application Init exits with error -----");
 				state = MAIN_EXIT;
 			}
 			else
 			{
 				state = MAIN_START;
-				MYLOG("Application Start --------------");
+				PERSLOG("Application Start --------------");
 			}
 
 			break;
 
 		case MAIN_START:
 
-			MYLOG("Application Start --------------");
+			PERSLOG("Application Start --------------");
 			if (App->Start() == false)
 			{
-				MYLOG("Application Start exits with error -----");
+				PERSLOG("Application Start exits with error -----");
 				state = MAIN_EXIT;
 			}
 			else
 			{
 				state = MAIN_UPDATE;
-				MYLOG("Application Update --------------");
+				PERSLOG("Application Update --------------");
 			}
 
 			break;
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 
 			if (update_return == UPDATE_ERROR)
 			{
-				MYLOG("Application Update exits with error -----");
+				PERSLOG("Application Update exits with error -----");
 				state = MAIN_EXIT;
 			}
 
@@ -84,10 +84,10 @@ int main(int argc, char** argv)
 
 		case MAIN_FINISH:
 
-			MYLOG("Application CleanUp --------------");
+			PERSLOG("Application CleanUp --------------");
 			if (App->CleanUp() == false)
 			{
-				MYLOG("Application CleanUp exits with error -----");
+				PERSLOG("Application CleanUp exits with error -----");
 			}
 			else
 				main_return = EXIT_SUCCESS;
@@ -101,6 +101,6 @@ int main(int argc, char** argv)
 	}
 
 	delete App;
-	MYLOG("Bye :)\n");
+	PERSLOG("Bye :)\n");
 	return main_return;
 }

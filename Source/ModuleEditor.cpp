@@ -1,5 +1,4 @@
 #include "ModuleEditor.h"
-
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
@@ -7,6 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+
 
 bool ModuleEditor::Init()
 {
@@ -40,6 +40,35 @@ update_status ModuleEditor::PreUpdate()
 update_status ModuleEditor::Update()
 {
 	ImGui::ShowDemoWindow();
+	ImGui::Text("This is just a debug");
+	ImGui::TextUnformatted("hola");
+	
+
+	if (ImGui::BeginMainMenuBar()) {
+		if (ImGui::BeginMenu("File")) {
+			if (ImGui::MenuItem("FileInfo")){ }
+
+			if (ImGui::MenuItem("BasicInfo2")) { }
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Edit")) {
+			if (ImGui::MenuItem("BasicInfo")){}
+
+			if (ImGui::MenuItem("BasicInfo2")) {}
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View")) {
+			if (ImGui::MenuItem("BasicInfo")) {}
+
+			if (ImGui::MenuItem("BasicInfo2")) {}
+
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+	
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

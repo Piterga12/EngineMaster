@@ -16,4 +16,5 @@ public:
 private:
 	GLuint vbo;
 	GLuint program;
+
 };

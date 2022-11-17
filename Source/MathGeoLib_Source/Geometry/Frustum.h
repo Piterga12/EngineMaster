@@ -42,7 +42,7 @@ enum FrustumType
 	/// point of intersection of the line of the projection and the near plane of the Frustum.
 	/// This corresponds to the optics in the real-world, and objects become smaller as they move to the distance.
 	/// The shape of the Frustum is a rectangular pyramid capped from the tip.
-	PerspectiveFrustum
+	PerspectiveFrustum = 2
 };
 
 /// The Frustum class offers choosing between the two common conventions for the value ranges in 

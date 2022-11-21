@@ -10,7 +10,6 @@ class Camera;
 
 class ModuleDebugDraw : public Module
 {
-
 public:
 
     ModuleDebugDraw();

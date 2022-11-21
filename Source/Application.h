@@ -31,8 +31,8 @@ public:
 	ModuleInput* input = nullptr;
 	ModuleProgram* program = nullptr;
 	ModuleRenderExercise* rendererExercise = nullptr;
-	ModuleEditor* editor = nullptr;
 	ModuleDebugDraw* debugDraw = nullptr;
+	ModuleEditor* editor = nullptr;
 
 private:
 

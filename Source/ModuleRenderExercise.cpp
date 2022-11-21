@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleProgram.h"
 #include "MathGeoLib_Source/Geometry/Frustum.h"
+#include "ModuleDebugDraw.h"
+#include "debugdraw.h"
 
 #define VERT_SHADER "VertexShader.glsl"
 #define FRAG_SHADER "FragmentShader.glsl"
@@ -39,6 +41,7 @@ update_status ModuleRenderExercise::Update()
 {
 	// We declare frustum
 	Frustum frustum;
+
 	//frustum.type = FrustumType::PerspectiveFrustum;
 	frustum.SetKind(FrustumProjectiveSpace::FrustumSpaceGL, FrustumHandedness::FrustumLeftHanded);
 	
@@ -54,6 +57,11 @@ update_status ModuleRenderExercise::Update()
 	float4x4 model = float4x4::FromTRS(float3(2.0f, 0.0f, 0.0f),
 		float4x4::RotateZ(pi / 4.0f),
 		float3(2.0f, 1.0f, 0.0f));
+
+	//Axis and Grid drawing
+	dd::axisTriad(float4x4::identity, 0.2f, 1.0f);
+	dd::xzSquareGrid(-10, 10, 0.0f, 1.0f, dd::colors::Gray);
+	App->debugDraw->Draw(view, proj, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	// This part is for drawing the triangle 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);

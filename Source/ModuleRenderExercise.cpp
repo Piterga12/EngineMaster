@@ -42,10 +42,7 @@ bool ModuleRenderExercise::Start()
 
 update_status ModuleRenderExercise::Update()
 {
-	//Axis and Grid drawing
-	axisTriad(float4x4::identity, 0.2f, 1.0f);
-	xzSquareGrid(-10, 10, 0.0f, 1.0f, colors::Gray);
-	App->debugDraw->Draw(App->camera->view, App->camera->proj, SCREEN_WIDTH, SCREEN_HEIGHT);
+	
 
 	// This part is for drawing the triangle 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -56,8 +53,13 @@ update_status ModuleRenderExercise::Update()
 
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * 6) /*buffer offset*/);
 	
+	
+	//Axis and Grid drawing
+	axisTriad(float4x4::identity, 0.2f, 1.0f);
+	xzSquareGrid(-10, 10, 0.0f, 1.0f, colors::Gray);
+	App->debugDraw->Draw(App->camera->view, App->camera->proj, SCREEN_WIDTH, SCREEN_HEIGHT);
+	
 	// This part if or using transform in shaders
-
 	glUseProgram(program);
 	glUniformMatrix4fv(0, 1, GL_TRUE, & App->camera->model[0][0]);
 	glUniformMatrix4fv(1, 1, GL_TRUE, & App->camera->view[0][0]);

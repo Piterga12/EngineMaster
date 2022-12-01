@@ -34,5 +34,10 @@ update_status ModuleCamera::Update()
 		float4x4::RotateZ(pi / 4.0f),
 		float3(2.0f, 1.0f, 0.0f));
 
+	int weidth, height;
+	SDL_GetWindowSize(App->window->window, &weidth, &height);
+	aspectRatio = ((float)weidth) / ((float)height);
+	frustum.SetHorizontalFovAndAspectRatio((math::pi / 180.0f) * 90.0f, aspectRatio);
+
 	return UPDATE_CONTINUE;
 }

@@ -17,6 +17,7 @@ ModuleRenderExercise::ModuleRenderExercise()
 ModuleRenderExercise::~ModuleRenderExercise()
 {
 	glDeleteBuffers(1, &vbo);
+	glDeleteProgram(program);
 }
 
 bool ModuleRenderExercise::Init()

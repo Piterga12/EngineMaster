@@ -99,12 +99,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SDL\include;.\libs\imgui;.\libs\DirectXTex;.\libs\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SDL\include;.\libs\imgui;.\libs\DirectXTex;.\libs\glew-2.1.0\include;.\Modules</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\libs\assimp\lib;.\libs\glew-2.1.0\lib\Release\x64;.\libs\DirectXTex\DirectXTex\Bin\Desktop_2019_Win10\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\libs\assimp\lib;.\libs\glew-2.1.0\lib\Release\x64;.\libs\DirectXTex\DirectXTex\Bin\Desktop_2019\x64\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;opengl32.lib;assimp-vc142-mt.lib;DirectXTex.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -196,14 +196,15 @@
     <ClCompile Include="MathGeoLib_Source\Math\SSEMath.cpp" />
     <ClCompile Include="MathGeoLib_Source\Math\TransformOps.cpp" />
     <ClCompile Include="MathGeoLib_Source\Time\Clock.cpp" />
-    <ClCompile Include="ModuleCamera.cpp" />
-    <ClCompile Include="ModuleDebugDraw.cpp" />
-    <ClCompile Include="ModuleEditor.cpp" />
-    <ClCompile Include="ModuleInput.cpp" />
-    <ClCompile Include="ModuleProgram.cpp" />
-    <ClCompile Include="ModuleRender.cpp" />
-    <ClCompile Include="ModuleRenderExercise.cpp" />
-    <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="Modules\ModuleCamera.cpp" />
+    <ClCompile Include="Modules\ModuleDebugDraw.cpp" />
+    <ClCompile Include="Modules\ModuleEditor.cpp" />
+    <ClCompile Include="Modules\ModuleInput.cpp" />
+    <ClCompile Include="Modules\ModuleProgram.cpp" />
+    <ClCompile Include="Modules\ModuleRender.cpp" />
+    <ClCompile Include="Modules\ModuleRenderExercise.cpp" />
+    <ClCompile Include="Modules\ModuleTexture.cpp" />
+    <ClCompile Include="Modules\ModuleWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -295,15 +296,16 @@
     <ClInclude Include="MathGeoLib_Source\Math\TransformOps.h" />
     <ClInclude Include="MathGeoLib_Source\Math\vec2d.h" />
     <ClInclude Include="MathGeoLib_Source\Time\Clock.h" />
-    <ClInclude Include="Module.h" />
-    <ClInclude Include="ModuleCamera.h" />
-    <ClInclude Include="ModuleDebugDraw.h" />
-    <ClInclude Include="ModuleEditor.h" />
-    <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModuleProgram.h" />
-    <ClInclude Include="ModuleRender.h" />
-    <ClInclude Include="ModuleRenderExercise.h" />
-    <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Modules\Module.h" />
+    <ClInclude Include="Modules\ModuleCamera.h" />
+    <ClInclude Include="Modules\ModuleDebugDraw.h" />
+    <ClInclude Include="Modules\ModuleEditor.h" />
+    <ClInclude Include="Modules\ModuleInput.h" />
+    <ClInclude Include="Modules\ModuleProgram.h" />
+    <ClInclude Include="Modules\ModuleRender.h" />
+    <ClInclude Include="Modules\ModuleRenderExercise.h" />
+    <ClInclude Include="Modules\ModuleTexture.h" />
+    <ClInclude Include="Modules\ModuleWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib_Source\Geometry\KDTree.inl" />

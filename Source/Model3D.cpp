@@ -29,11 +29,6 @@ Model3D::~Model3D()
 
 Model3D* Model3D::LoadFromFile(const std::string& i_fileName)
 {
-	if (!CheckValidFormat(i_fileName)) {
-		App->editor->OutputToConsole("File is not FBX");
-		return nullptr;
-	}
-
 	Model3D* model = new Model3D(i_fileName);
 
 	std::string filePath = i_fileName;
@@ -43,7 +38,6 @@ Model3D* Model3D::LoadFromFile(const std::string& i_fileName)
 	{
 		model->LoadMaterials(scene);
 		if (model->m_textures.size() != scene->mNumMaterials) {
-			App->editor->OutputToConsole("Some texture(s) failed to load");
 			aiReleaseImport(scene);
 			return nullptr;
 		}
@@ -53,16 +47,12 @@ Model3D* Model3D::LoadFromFile(const std::string& i_fileName)
 	}
 	else
 	{
-		std::string errorString = "Error loading " + i_fileName + ": " + aiGetErrorString();
-		App->editor->OutputToConsole(errorString.c_str());
 		return nullptr;
 	}
 }
 
 bool Model3D::CheckValidFormat(const std::string& i_fileName)
 {
-	//this could be more simple if we just get the last 4 characters of the string
-	//but this way is more usable
 	std::string fileFormat;
 	bool dotNotFound = true;
 	for (int i = i_fileName.size() - 1; dotNotFound && 0 <= i; --i) {

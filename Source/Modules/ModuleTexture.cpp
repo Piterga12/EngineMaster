@@ -18,7 +18,6 @@ GLuint ModuleTexture::LoadTextureFromFile(std::string i_texturePathInModel, std:
     DirectX::ScratchImage image;
     HRESULT loadingImageResult = LoadImageFromFile(i_texturePathInModel, i_modelPath, image);
     if (FAILED(loadingImageResult)) {
-        App->editor->OutputToConsole(("Texture " + i_texturePathInModel + " failed to load").c_str());
         return -1;
     }
 
@@ -63,10 +62,7 @@ HRESULT ModuleTexture::LoadImageFromFile(const std::string& i_texturePathInModel
         res = TryLoadingImage(texturePath, image);
     }
 
-    if (FAILED(res)) {
-        App->editor->OutputToConsole(("Texture " + textureName + " not found").c_str());
-    }
-    else {
+    if (SUCCEEDED(res)) {
         res = RotateImage(image, o_image);
     }
 

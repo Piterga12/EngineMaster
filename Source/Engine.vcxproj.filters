@@ -320,34 +320,11 @@
     <ClInclude Include="libs\MathGeoLib\Include\MathBuildConfig.h" />
     <ClInclude Include="libs\MathGeoLib\Include\MathGeoLib.h" />
     <ClInclude Include="libs\MathGeoLib\Include\MathGeoLibFwd.h" />
+    <ClInclude Include="Globals.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
       <UniqueIdentifier>{8e30c3c1-a3b8-4389-a177-b260e182701e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{c434df95-597f-4442-9f42-29d5d771c4f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\ImGui">
-      <UniqueIdentifier>{2ba5db73-d264-4431-a4d8-3da3610c34d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\MathGeoLib">
-      <UniqueIdentifier>{360f95b6-f921-4878-93b6-5a7eb08830a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\MathGeoLib\Algorithm">
-      <UniqueIdentifier>{59f9cacf-e5f7-4542-8166-acf6a63f1f78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\MathGeoLib\Algorithm\Random">
-      <UniqueIdentifier>{1ebd69c6-c590-4475-9d6c-8030c59c5ec1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\MathGeoLib\Geometry">
-      <UniqueIdentifier>{cdb65e16-3fc0-4956-9bbb-2057cbf21fe4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\MathGeoLib\Math">
-      <UniqueIdentifier>{3bdc910a-0b8a-4ed4-a6f5-2871e7ae3121}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\MathGeoLib\Time">
-      <UniqueIdentifier>{b2b8350e-04a2-4d05-8788-e81bfd3e821e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Modules">
       <UniqueIdentifier>{0e47e329-0ce9-412a-9e41-ff511aa8574c}</UniqueIdentifier>
@@ -363,6 +340,27 @@
     </Filter>
     <Filter Include="Source\Models\Timers">
       <UniqueIdentifier>{26e31c71-09fc-4943-96e4-55fa89d0309d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{2ba5db73-d264-4431-a4d8-3da3610c34d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathGeoLib">
+      <UniqueIdentifier>{360f95b6-f921-4878-93b6-5a7eb08830a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathGeoLib\Algorithm">
+      <UniqueIdentifier>{59f9cacf-e5f7-4542-8166-acf6a63f1f78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathGeoLib\Algorithm\Random">
+      <UniqueIdentifier>{1ebd69c6-c590-4475-9d6c-8030c59c5ec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathGeoLib\Geometry">
+      <UniqueIdentifier>{cdb65e16-3fc0-4956-9bbb-2057cbf21fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathGeoLib\Math">
+      <UniqueIdentifier>{3bdc910a-0b8a-4ed4-a6f5-2871e7ae3121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathGeoLib\Time">
+      <UniqueIdentifier>{b2b8350e-04a2-4d05-8788-e81bfd3e821e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

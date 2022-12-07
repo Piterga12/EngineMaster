@@ -17,9 +17,7 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-
-	void OutputToConsole(const char* i_textToPrint);
-	void SetTargetModel(const Model3D* i_model);
+	void SetTargetModel(const Model3D* model);
 
 private:
 	std::string FpsTab = "FPS";

@@ -14,28 +14,22 @@
 ModuleInput::ModuleInput()
 {}
 
-// Destructor
 ModuleInput::~ModuleInput()
 {}
 
-// Called before render is available
 bool ModuleInput::Init()
 {
-	App->editor->OutputToConsole("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-        std::string errorLog = "SDL_EVENTS could not initialize! SDL_Error: " + std::string(SDL_GetError()) + "\n";
-        App->editor->OutputToConsole(errorLog.c_str());
 		ret = false;
 	}
 
 	return ret;
 }
 
-// Called every draw update
 update_status ModuleInput::Update()
 {
     SDL_Event sdlEvent;
@@ -57,57 +51,56 @@ update_status ModuleInput::Update()
                 break;
             case SDL_DROPFILE:
                 dropfileDir = sdlEvent.drop.file;
-                App->editor->OutputToConsole(("File dropped: " + std::string(dropfileDir)).c_str());
-                App->exercise->SetModel3D(dropfileDir);
+                App->rendererExercise->SetModel3D(dropfileDir);
                 break;
         }
     }
 
-    m_keyboard = SDL_GetKeyboardState(NULL);
+    keyBoard = SDL_GetKeyboardState(NULL);
     int deltaTime = App->GetDeltaTime();
 
-    //translate camera
+    //For camera move
     float3 deltaPosVec = float3::zero;
     float cameraSpeed = 0.02f;
-    if (m_keyboard[SDL_SCANCODE_LSHIFT])
+    if (keyBoard[SDL_SCANCODE_LSHIFT])
         cameraSpeed *= 2;
     float deltaPos = cameraSpeed * deltaTime;
 
-    if (m_keyboard[SDL_SCANCODE_W]) {
+    if (keyBoard[SDL_SCANCODE_W]) {
         deltaPosVec.x += deltaPos;
     }
-    if (m_keyboard[SDL_SCANCODE_S]) {
+    if (keyBoard[SDL_SCANCODE_S]) {
         deltaPosVec.x -= deltaPos;
     }
-    if (m_keyboard[SDL_SCANCODE_Q]) {
+    if (keyBoard[SDL_SCANCODE_Q]) {
         deltaPosVec.y += deltaPos;
     }
-    if (m_keyboard[SDL_SCANCODE_E]) {
+    if (keyBoard[SDL_SCANCODE_E]) {
         deltaPosVec.y -= deltaPos;
     }
-    if (m_keyboard[SDL_SCANCODE_D]) {
+    if (keyBoard[SDL_SCANCODE_D]) {
         deltaPosVec.z += deltaPos;
     }
-    if (m_keyboard[SDL_SCANCODE_A]) {
+    if (keyBoard[SDL_SCANCODE_A]) {
         deltaPosVec.z -= deltaPos;
     }
     App->camera->Translate(deltaPosVec);
 
-    //rotate camera
+    //For camera rotation
     float3 deltaRot = float3::zero;
     float angleSpeed = 0.005f;
     float deltaAngle = angleSpeed * deltaTime;
 
-    if (m_keyboard[SDL_SCANCODE_LEFT]) {
+    if (keyBoard[SDL_SCANCODE_LEFT]) {
         deltaRot.y += deltaAngle;
     }
-    if (m_keyboard[SDL_SCANCODE_RIGHT]) {
+    if (keyBoard[SDL_SCANCODE_RIGHT]) {
         deltaRot.y -= deltaAngle;
     }
-    if (m_keyboard[SDL_SCANCODE_UP]) {
+    if (keyBoard[SDL_SCANCODE_UP]) {
         deltaRot.x += deltaAngle;
     }
-    if (m_keyboard[SDL_SCANCODE_DOWN]) {
+    if (keyBoard[SDL_SCANCODE_DOWN]) {
         deltaRot.x -= deltaAngle;
     }
     App->camera->Rotate(deltaRot);
@@ -115,7 +108,6 @@ update_status ModuleInput::Update()
     return UPDATE_CONTINUE;
 }
 
-// Called before quitting
 bool ModuleInput::CleanUp()
 {
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);

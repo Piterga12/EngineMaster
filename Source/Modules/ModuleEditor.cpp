@@ -123,11 +123,6 @@ bool ModuleEditor::CleanUp()
 	return true;
 }
 
-void ModuleEditor::OutputToConsole(const char* i_textToPrint)
-{
-	//m_console->Output(i_textToPrint);
-}
-
 void ModuleEditor::SetTargetModel(const Model3D* i_model)
 {
 	//m_model->SetModel(i_model);

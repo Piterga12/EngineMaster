@@ -217,6 +217,7 @@
     <ClInclude Include="debugdraw.h" />
     <ClInclude Include="debug_draw.hpp" />
     <ClInclude Include="Dummy.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="libs\assimp\assimp\aabb.h" />
     <ClInclude Include="libs\assimp\assimp\ai_assert.h" />
     <ClInclude Include="libs\assimp\assimp\anim.h" />

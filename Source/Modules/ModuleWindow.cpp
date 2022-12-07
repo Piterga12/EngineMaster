@@ -15,18 +15,14 @@ ModuleWindow::~ModuleWindow()
 // Called before render is available
 bool ModuleWindow::Init()
 {
-	App->editor->OutputToConsole("Init SDL window & surface");
 	bool ret = true;
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		std::string sdlError = "SDL_VIDEO could not initialize! SDL_Error: " + std::string(SDL_GetError()) + "\n";
-		App->editor->OutputToConsole(sdlError.c_str());
 		ret = false;
 	}
 	else
 	{
-		//Create window
 		int width = SCREEN_WIDTH;
 		int height = SCREEN_HEIGHT;
 		Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
@@ -40,14 +36,10 @@ bool ModuleWindow::Init()
 
 		if(window == NULL)
 		{
-			std::string sdlError = "Window could not be created! SDL_Error: " + std::string(SDL_GetError()) + "\n";
-			App->editor->OutputToConsole(sdlError.c_str());
 			ret = false;
 		}
 		else
 		{
-			//Get window surface
-			
 			ScreenSurface = SDL_GetWindowSurface(window);
 		}
 	}

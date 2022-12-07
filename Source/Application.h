@@ -26,21 +26,17 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	int GetDeltaTime();
 
-public:
 	ModuleRender* renderer = nullptr;
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
 	ModuleProgram* program = nullptr;
 	ModuleCamera* camera = nullptr;
-	ModuleRenderExercise* exercise = nullptr;
+	ModuleRenderExercise* rendererExercise = nullptr;
 	ModuleEditor* editor = nullptr;
 	ModuleDebugDraw* debugDraw = nullptr;
 	ModuleTexture* texture = nullptr;
-
-	int GetDeltaTime() {
-		return DeltaTime;
-	}
 
 private:
 	std::list<Module*> modules;

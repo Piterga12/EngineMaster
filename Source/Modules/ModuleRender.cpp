@@ -18,8 +18,6 @@ ModuleRender::~ModuleRender()
 // Called before render is available
 bool ModuleRender::Init()
 {
-	App->editor->OutputToConsole("Creating Renderer context");
-
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -31,24 +29,6 @@ bool ModuleRender::Init()
 	m_context = SDL_GL_CreateContext(App->window->window);
 
 	GLenum err = glewInit();
-	// … check for errors
-	char glewVersion[128];
-	sprintf(glewVersion, "Using Glew %s", glewGetString(GLEW_VERSION));
-	App->editor->OutputToConsole(glewVersion);
-	// Should be 2.0
-
-	char glVendor[128];
-	sprintf(glVendor, "Vendor: %s", glGetString(GL_VENDOR));
-	App->editor->OutputToConsole(glVendor);
-	char glRenderer[128];
-	sprintf(glRenderer, "Renderer: %s", glGetString(GL_RENDERER));
-	App->editor->OutputToConsole(glRenderer);
-	char glSupported[128];
-	sprintf(glSupported, "OpenGL version supported %s", glGetString(GL_VERSION));
-	App->editor->OutputToConsole(glSupported);
-	char glslVersion[128];
-	sprintf(glslVersion, "GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-	App->editor->OutputToConsole(glslVersion);
 
 	glEnable(GL_DEPTH_TEST); // Enable depth test
 	glEnable(GL_CULL_FACE); // Enable cull backward faces
@@ -83,7 +63,6 @@ update_status ModuleRender::PostUpdate()
 // Called before quitting
 bool ModuleRender::CleanUp()
 {
-	//Destroy window
 	SDL_GL_DeleteContext(m_context);
 
 	return true;

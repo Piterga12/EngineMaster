@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include <string>
 
 class ModuleEditor : public Module
 {
@@ -11,4 +12,8 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
+
+private:
+	std::string FpsTab = "FPS";
+	std::string ModelTab = "Model Information";
 };

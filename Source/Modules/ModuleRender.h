@@ -1,6 +1,6 @@
 #pragma once
 #include "Module.h"
-#include "..\Globals.h"
+#include "../Globals.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -17,7 +17,7 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-	void WindowResized(unsigned width, unsigned height);
+	void WindowResized(unsigned i_width, unsigned i_height);
 
 private:
 	friend class ModuleEditor;

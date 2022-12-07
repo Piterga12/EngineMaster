@@ -99,12 +99,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SDL\include;.\libs\imgui;.\libs\DirectXTex;.\libs\glew-2.1.0\include;.\Modules</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\libs\assimp\assimp;.\SDL\include;.\libs\imgui;.\libs\DirectXTex;.\libs\glew-2.1.0\include;.\Modules</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\libs\assimp\lib;.\libs\glew-2.1.0\lib\Release\x64;.\libs\DirectXTex\DirectXTex\Bin\Desktop_2019\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\libs\assimp\assimp;.\libs\assimp\lib;.\libs\glew-2.1.0\lib\Release\x64;.\libs\DirectXTex\DirectXTex\Bin\Desktop_2019\x64\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;opengl32.lib;assimp-vc142-mt.lib;DirectXTex.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -196,6 +196,8 @@
     <ClCompile Include="MathGeoLib_Source\Math\SSEMath.cpp" />
     <ClCompile Include="MathGeoLib_Source\Math\TransformOps.cpp" />
     <ClCompile Include="MathGeoLib_Source\Time\Clock.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="WindowImgui.cpp" />
     <ClCompile Include="Modules\ModuleCamera.cpp" />
     <ClCompile Include="Modules\ModuleDebugDraw.cpp" />
     <ClCompile Include="Modules\ModuleEditor.cpp" />
@@ -296,6 +298,8 @@
     <ClInclude Include="MathGeoLib_Source\Math\TransformOps.h" />
     <ClInclude Include="MathGeoLib_Source\Math\vec2d.h" />
     <ClInclude Include="MathGeoLib_Source\Time\Clock.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="WindowImgui.h" />
     <ClInclude Include="Modules\Module.h" />
     <ClInclude Include="Modules\ModuleCamera.h" />
     <ClInclude Include="Modules\ModuleDebugDraw.h" />

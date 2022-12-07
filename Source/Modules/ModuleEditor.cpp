@@ -4,9 +4,11 @@
 #include "ModuleRender.h"
 
 #include "imgui.h"
+#include "..\WindowImgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 
+WindowImgui winIm;
 
 bool ModuleEditor::Init()
 {
@@ -25,6 +27,8 @@ bool ModuleEditor::Start()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
+	winIm.Start();
+
 	return true;
 }
 
@@ -39,10 +43,18 @@ update_status ModuleEditor::PreUpdate()
 
 update_status ModuleEditor::Update()
 {
-	ImGui::ShowDemoWindow();
-	ImGui::Text("This is just a debug");
-	ImGui::TextUnformatted("hola");
-	
+	bool tabs;
+	//Creating the tabs for FPS, Hardware, and Model info
+	if (ImGui::Begin(FpsTab.c_str(), &tabs, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("The actual FrameRate is:");
+	}
+	ImGui::End();
+	winIm.Update();
+
+	if (ImGui::Begin(ModelTab.c_str(), &tabs, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("This is just a debug2");
+	}
+	ImGui::End();
 
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {

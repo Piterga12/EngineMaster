@@ -1,10 +1,16 @@
 #include "..\Globals.h"
 #include "ModuleDebugDraw.h"
+#include "../Application.h"
+#include "ModuleWindow.h"
+#include "ModuleCamera.h"
+#include "SDL.h"
 
 #define DEBUG_DRAW_IMPLEMENTATION
 #include "..\DebugDraw.h"     // Debug Draw API. Notice that we need the DEBUG_DRAW_IMPLEMENTATION macro here!
 
 #include "GL\glew.h"
+
+using namespace dd;
 
 class DDRenderInterfaceCoreGL final
     : public dd::RenderInterface
@@ -591,14 +597,14 @@ ModuleDebugDraw::~ModuleDebugDraw()
 bool ModuleDebugDraw::Init()
 {
     implementation = new DDRenderInterfaceCoreGL;
-    dd::initialize(implementation);
+    initialize(implementation);
     return true;
 }
 
 
 bool ModuleDebugDraw::CleanUp()
 {
-    dd::shutdown();
+    shutdown();
 
     delete implementation;
     implementation = 0;
@@ -608,6 +614,9 @@ bool ModuleDebugDraw::CleanUp()
 
 update_status  ModuleDebugDraw::Update()
 {
+    int w, h;
+    SDL_GetWindowSize(App->window->window, &w, &h);
+    //Draw(App->camera->GetView(), App->camera->GetProjection(), w, h);
 	return UPDATE_CONTINUE;
 }
 
@@ -616,8 +625,10 @@ void ModuleDebugDraw::Draw(const float4x4& view, const float4x4& proj, unsigned 
     implementation->width     = width;
     implementation->height    = height;
     implementation->mvpMatrix = proj * view;
+    axisTriad(float4x4::identity, 0.1f, 1.0f);
+    xzSquareGrid(-10, 10, 0.0f, 1.0f, colors::Gray);
 
-    dd::flush();
+    flush();
 }
 
 

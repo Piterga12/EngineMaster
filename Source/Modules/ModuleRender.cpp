@@ -1,9 +1,10 @@
-#include "..\Globals.h"
-#include "..\Application.h"
+#include "../Globals.h"
+#include "../Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "SDL.h"
-#include <GL\glew.h>
+#include "GL/glew.h"
+#include "ModuleEditor.h"
 
 ModuleRender::ModuleRender()
 {
@@ -17,8 +18,6 @@ ModuleRender::~ModuleRender()
 // Called before render is available
 bool ModuleRender::Init()
 {
-	PERSLOG("Creating Renderer context");
-
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -31,13 +30,19 @@ bool ModuleRender::Init()
 
 	GLenum err = glewInit();
 	// … check for errors
-	PERSLOG("Using Glew %s", glewGetString(GLEW_VERSION));
+	char glewVersion[128];
+	sprintf(glewVersion, "Using Glew %s", glewGetString(GLEW_VERSION));
+
 	// Should be 2.0
 
-	PERSLOG("Vendor: %s", glGetString(GL_VENDOR));
-	PERSLOG("Renderer: %s", glGetString(GL_RENDERER));
-	PERSLOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	PERSLOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	char glVendor[128];
+	sprintf(glVendor, "Vendor: %s", glGetString(GL_VENDOR));
+	char glRenderer[128];
+	sprintf(glRenderer, "Renderer: %s", glGetString(GL_RENDERER));
+	char glSupported[128];
+	sprintf(glSupported, "OpenGL version supported %s", glGetString(GL_VERSION));
+	char glslVersion[128];
+	sprintf(glslVersion, "GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	glEnable(GL_DEPTH_TEST); // Enable depth test
 	glEnable(GL_CULL_FACE); // Enable cull backward faces
@@ -72,14 +77,12 @@ update_status ModuleRender::PostUpdate()
 // Called before quitting
 bool ModuleRender::CleanUp()
 {
-	PERSLOG("Destroying renderer");
-
 	//Destroy window
 	SDL_GL_DeleteContext(context);
 
 	return true;
 }
 
-void ModuleRender::WindowResized(unsigned width, unsigned height)
+void ModuleRender::WindowResized(unsigned i_width, unsigned i_height)
 {
 }

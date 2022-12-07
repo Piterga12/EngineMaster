@@ -13,6 +13,7 @@ class ModuleRenderExercise;
 class ModuleEditor;
 class ModuleDebugDraw;
 class ModuleCamera;
+class Timer;
 
 class Application
 {
@@ -26,7 +27,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
 	ModuleRender* renderer = nullptr;
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
@@ -36,9 +36,16 @@ public:
 	ModuleEditor* editor = nullptr;
 	ModuleCamera* camera = nullptr;
 
+	int GetDeltaTime() {
+		return DeltaTime;
+	}
+
 private:
 
 	std::list<Module*> modules;
+
+	int PrevTime = 0;
+	int DeltaTime = 0;
 
 };
 

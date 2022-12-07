@@ -12,6 +12,13 @@ using namespace dd;
 
 ModuleRenderExercise::ModuleRenderExercise()
 {
+	model = float4x4::identity;
+
+	float4x4::FromTRS(float3(2.0f, 0.0f, 0.0f),
+		float4x4::RotateZ(pi / 4.0f),
+		//float3(0.01f, 0.01f, 0.01f)
+		float3(1.0f, 1.0f, 1.0f)
+	);
 }
 
 ModuleRenderExercise::~ModuleRenderExercise()
@@ -55,16 +62,12 @@ update_status ModuleRenderExercise::Update()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * 6) /*buffer offset*/);
 	
 	
-	//Axis and Grid drawing
-	axisTriad(float4x4::identity, 0.1f, 1.0f);
-	xzSquareGrid(-10, 10, 0.0f, 1.0f, colors::Gray);
-	App->debugDraw->Draw(App->camera->view, App->camera->proj, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 	// This part if or using transform in shaders
 	glUseProgram(program);
-	glUniformMatrix4fv(0, 1, GL_TRUE, & App->camera->model[0][0]);
-	glUniformMatrix4fv(1, 1, GL_TRUE, & App->camera->view[0][0]);
-	glUniformMatrix4fv(2, 1, GL_TRUE, & App->camera->proj[0][0]);
+	glUniformMatrix4fv(0, 1, GL_TRUE, &model[0][0]);
+	//glUniformMatrix4fv(1, 1, GL_TRUE, & App->camera->GetViewMatrix()[0][0]);
+	//glUniformMatrix4fv(2, 1, GL_TRUE, & App->camera->GetProjectionMatrix()[0][0]);
 
 		
 	glDrawArrays(GL_TRIANGLES, 0, 3*2);

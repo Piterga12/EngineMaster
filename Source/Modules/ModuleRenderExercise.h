@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include <GL\glew.h>
+#include "../../Source/MathGeoLib_Source/Math/float4x4.h"
 
 class ModuleRenderExercise : public Module
 {
@@ -14,6 +15,8 @@ public:
 	update_status Update();
 
 private:
+	float4x4 model;
+
 	GLuint vbo;
 	GLuint program;
 

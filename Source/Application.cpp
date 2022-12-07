@@ -8,8 +8,14 @@
 #include "ModuleInput.h"
 #include "ModuleDebugDraw.h"
 #include "ModuleCamera.h"
+#include "Timer.h"
+
+#include "WindowImgui.h"
 
 using namespace std;
+
+Timer myTimer;
+WindowImgui WinFps;
 
 Application::Application()
 {
@@ -22,6 +28,7 @@ Application::Application()
 	modules.push_back(rendererExercise = new ModuleRenderExercise());
 	modules.push_back(debugDraw = new ModuleDebugDraw());
 	modules.push_back(camera = new ModuleCamera());
+
 }
 
 Application::~Application()
@@ -48,22 +55,33 @@ bool Application::Start()
 
 	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Start();
+	myTimer.Start();
+	PrevTime = myTimer.Read();
 
 	return ret;
 }
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
+	int actualTime = myTimer.Read();
+	DeltaTime = actualTime - PrevTime;
 
-	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PreUpdate();
+	float timePerFrame = 0.f;
+	
+	if (0 < WinFps.GetFps())
+		timePerFrame = 1000.f / WinFps.GetFps();
+	//PERSLOG("%f", WinFps.GetFps());
+	if (timePerFrame < DeltaTime) {
+		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
+			ret = (*it)->PreUpdate();
 
-	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->Update();
+		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
+			ret = (*it)->Update();
 
-	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PostUpdate();
-
+		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
+			ret = (*it)->PostUpdate();
+		PrevTime = actualTime;
+	}
 	return ret;
 }
 

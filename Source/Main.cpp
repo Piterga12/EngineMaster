@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "Application.h"
-#include ".\Modules\ModuleRender.h"
+#include "ModuleRender.h"
 #include "Globals.h"
 
 #include "SDL/include/SDL.h"
@@ -9,7 +9,7 @@
 
 enum main_states
 {
-	MAIN_CREATION,
+	MAIN_CREATION,  
 	MAIN_INIT,
 	MAIN_START,
 	MAIN_UPDATE,
@@ -19,7 +19,7 @@ enum main_states
 
 Application* App = NULL;
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 			}
 
 			break;
-
+		
 		case MAIN_START:
 
 			PERSLOG("Application Start --------------");
@@ -80,7 +80,7 @@ int main(int argc, char** argv)
 			if (update_return == UPDATE_STOP)
 				state = MAIN_FINISH;
 		}
-		break;
+			break;
 
 		case MAIN_FINISH:
 

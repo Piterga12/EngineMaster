@@ -131,7 +131,7 @@ extern "C" {
 typedef enum
 {
     SDL_SYSWM_UNKNOWN,
-    SDL_SYSWM_WINDOWS,
+    SDL_SYSWwindowS,
     SDL_SYSWM_X11,
     SDL_SYSWM_DIRECTFB,
     SDL_SYSWM_COCOA,

@@ -1,16 +1,14 @@
 #include "..\Globals.h"
 #include "ModuleDebugDraw.h"
-#include "../Application.h"
-#include "ModuleWindow.h"
+#include "..\Application.h"
 #include "ModuleCamera.h"
+#include "ModuleWindow.h"
 #include "SDL.h"
 
 #define DEBUG_DRAW_IMPLEMENTATION
 #include "..\DebugDraw.h"     // Debug Draw API. Notice that we need the DEBUG_DRAW_IMPLEMENTATION macro here!
 
-#include "GL\glew.h"
-
-using namespace dd;
+#include "GL/glew.h"
 
 class DDRenderInterfaceCoreGL final
     : public dd::RenderInterface
@@ -584,7 +582,7 @@ const char * DDRenderInterfaceCoreGL::textFragShaderSrc = "\n"
     "    out_FragColor.a = texture(u_glyphTexture, v_TexCoords).r;\n"
     "}\n";
 
-DDRenderInterfaceCoreGL* ModuleDebugDraw::implementation = 0;
+DDRenderInterfaceCoreGL* ModuleDebugDraw::s_implementation = 0;
 
 ModuleDebugDraw::ModuleDebugDraw() 
 {
@@ -596,18 +594,18 @@ ModuleDebugDraw::~ModuleDebugDraw()
 
 bool ModuleDebugDraw::Init()
 {
-    implementation = new DDRenderInterfaceCoreGL;
-    initialize(implementation);
+    s_implementation = new DDRenderInterfaceCoreGL;
+    dd::initialize(s_implementation);
     return true;
 }
 
 
 bool ModuleDebugDraw::CleanUp()
 {
-    shutdown();
+    dd::shutdown();
 
-    delete implementation;
-    implementation = 0;
+    delete s_implementation;
+    s_implementation = 0;
 
     return true;
 }
@@ -616,19 +614,20 @@ update_status  ModuleDebugDraw::Update()
 {
     int w, h;
     SDL_GetWindowSize(App->window->window, &w, &h);
-    //Draw(App->camera->GetView(), App->camera->GetProjection(), w, h);
+    Draw(App->camera->GetView(), App->camera->GetProjection(), w, h);
 	return UPDATE_CONTINUE;
 }
 
-void ModuleDebugDraw::Draw(const float4x4& view, const float4x4& proj, unsigned width, unsigned height)
+void ModuleDebugDraw::Draw(const float4x4& i_view, const float4x4& i_proj, unsigned i_width, unsigned i_height)
 {
-    implementation->width     = width;
-    implementation->height    = height;
-    implementation->mvpMatrix = proj * view;
-    axisTriad(float4x4::identity, 0.1f, 1.0f);
-    xzSquareGrid(-10, 10, 0.0f, 1.0f, colors::Gray);
+    s_implementation->width     = i_width;
+    s_implementation->height    = i_height;
+    s_implementation->mvpMatrix = i_proj * i_view;
 
-    flush();
+    dd::axisTriad(float4x4::identity, 0.1f, 1.0f);
+    dd::xzSquareGrid(-10, 10, 0.0f, 1.0f, dd::colors::Gray);
+
+    dd::flush();
 }
 
 

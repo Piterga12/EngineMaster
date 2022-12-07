@@ -215,7 +215,7 @@ typedef unsigned int uintptr_t;
 #define SDL_POWER_WINDOWS 1
 
 /* Enable filesystem support */
-#define SDL_FILESYSTEM_WINDOWS  1
+#define SDL_FILESYSTEwindowS  1
 
 /* Enable assembly routines (Win64 doesn't have inline asm) */
 #ifndef _WIN64

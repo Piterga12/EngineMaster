@@ -1,6 +1,7 @@
 #include "..\Globals.h"
 #include "..\Application.h"
 #include "ModuleWindow.h"
+#include "ModuleEditor.h"
 
 ModuleWindow::ModuleWindow()
 {
@@ -14,12 +15,13 @@ ModuleWindow::~ModuleWindow()
 // Called before render is available
 bool ModuleWindow::Init()
 {
-	PERSLOG("Init SDL window & surface");
+	App->editor->OutputToConsole("Init SDL window & surface");
 	bool ret = true;
 
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		PERSLOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		std::string sdlError = "SDL_VIDEO could not initialize! SDL_Error: " + std::string(SDL_GetError()) + "\n";
+		App->editor->OutputToConsole(sdlError.c_str());
 		ret = false;
 	}
 	else
@@ -27,36 +29,37 @@ bool ModuleWindow::Init()
 		//Create window
 		int width = SCREEN_WIDTH;
 		int height = SCREEN_HEIGHT;
-		Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+		Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
-		if (FULLSCREEN == true)
+		if(FULLSCREEN == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
-		if (window == NULL)
+		if(window == NULL)
 		{
-			PERSLOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			std::string sdlError = "Window could not be created! SDL_Error: " + std::string(SDL_GetError()) + "\n";
+			App->editor->OutputToConsole(sdlError.c_str());
 			ret = false;
 		}
 		else
 		{
 			//Get window surface
-
-			screen_surface = SDL_GetWindowSurface(window);
+			
+			ScreenSurface = SDL_GetWindowSurface(window);
 		}
 	}
 
 	return ret;
 }
 
+// Called before quitting
 bool ModuleWindow::CleanUp()
 {
-	PERSLOG("Proceeding with destroy SDL window and quitting all SDL systems");
-
-	if (window != NULL)
+	//Destroy window
+	if(window != NULL)
 	{
 		SDL_DestroyWindow(window);
 	}
@@ -64,3 +67,4 @@ bool ModuleWindow::CleanUp()
 	SDL_Quit();
 	return true;
 }
+

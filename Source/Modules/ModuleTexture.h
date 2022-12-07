@@ -4,7 +4,7 @@
 
 #include <string>
 #include <GL/glew.h>
-#include "DirectXTex/DirectXTex.h"
+#include "../libs/DirectXTex/DirectXTex/DirectXTex.h"
 
 class ModuleTexture : public Module
 {

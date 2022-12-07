@@ -1,14 +1,25 @@
 #include "ModuleEditor.h"
+
+#include <string>
+
 #include "..\Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 
-#include "imgui.h"
 #include "..\WindowImgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_sdl.h"
+
+#include "../libs/ImGui/include/imgui_impl_opengl3.h"
+#include "../libs/ImGui/include/imgui_impl_sdl.h"
 
 WindowImgui winIm;
+
+ModuleEditor::ModuleEditor()
+{
+}
+
+ModuleEditor::~ModuleEditor()
+{
+}
 
 bool ModuleEditor::Init()
 {
@@ -24,9 +35,9 @@ bool ModuleEditor::Init()
 
 bool ModuleEditor::Start()
 {
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->m_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
-
+	
 	winIm.Start();
 
 	return true;
@@ -58,14 +69,14 @@ update_status ModuleEditor::Update()
 
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
-			if (ImGui::MenuItem("FileInfo")){ }
+			if (ImGui::MenuItem("FileInfo")) {}
 
-			if (ImGui::MenuItem("BasicInfo2")) { }
+			if (ImGui::MenuItem("BasicInfo2")) {}
 
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit")) {
-			if (ImGui::MenuItem("BasicInfo")){}
+			if (ImGui::MenuItem("BasicInfo")) {}
 
 			if (ImGui::MenuItem("BasicInfo2")) {}
 
@@ -80,7 +91,7 @@ update_status ModuleEditor::Update()
 		}
 		ImGui::EndMainMenuBar();
 	}
-	
+
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -106,8 +117,18 @@ update_status ModuleEditor::PostUpdate()
 bool ModuleEditor::CleanUp()
 {
 	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
 
 	return true;
+}
+
+void ModuleEditor::OutputToConsole(const char* i_textToPrint)
+{
+	//m_console->Output(i_textToPrint);
+}
+
+void ModuleEditor::SetTargetModel(const Model3D* i_model)
+{
+	//m_model->SetModel(i_model);
 }

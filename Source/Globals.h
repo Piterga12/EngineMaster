@@ -13,26 +13,7 @@ enum update_status
 	UPDATE_ERROR
 };
 
-enum CamMoves
-{
-	MOVE_STRAIGHT = 1,
-	MOVE_RIGTH,
-	MOVE_LEFT,
-	MOVE_BACK,
-	MOVE_UP,
-	MOVE_DOWN,
-	ROTATE_UP,
-	ROTATE_DOWN,
-	ROTATE_RIGHT,
-	ROTATE_LEFT,
-	ROTATE_FREE
-};
-
-//Const
-#define DEGTORAD 0.01745329251f
-
 // Configuration -----------
-#define GLSL_VERSION "version 460"
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 #define FULLSCREEN false

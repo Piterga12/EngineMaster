@@ -78,7 +78,7 @@ typedef struct
     float scale;
     int depth;
     int refresh_rate;
-    int num_windows;
+    int nuwindows;
     SDL_Window **windows;
 
     /* Renderer info */

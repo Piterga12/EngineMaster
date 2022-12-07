@@ -10,11 +10,13 @@ public:
 	ModuleProgram();
 	~ModuleProgram();
 
-	static const std::string FOLDER_SHADERS;
-	GLuint CreateProgramFromShaders(const std::string& vertexShaderName, const std::string& fragmentShaderName);
+	static const std::string s_shaderFolderPath;
+
+	GLuint CreateProgramFromShaders(const std::string& i_vertexShaderName, const std::string& i_fragmentShaderName);
 
 private:
-	std::string ReadShaderFile(const std::string& fileName);
-	GLuint CompileShader(GLenum shaderType, const std::string& shaderSource);
-	GLuint CreateProgram(GLuint vertexShader, GLuint fragmentShader);
+	std::string ReadShaderFile(const std::string& i_fileName);
+	GLuint CompileShader(GLenum i_shaderType, const std::string& i_shaderSource);
+	GLuint CreateProgram(GLuint i_vertexShader, GLuint i_fragmentShader);
 };
+

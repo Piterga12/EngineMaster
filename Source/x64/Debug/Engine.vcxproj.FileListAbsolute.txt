@@ -1,4 +1,2 @@
-C:\Users\Carlos\Desktop\Engine\Source\x64\Debug\Engine.exe
-C:\Users\Carlos\Desktop\Engine\Source\x64\Debug\Engine.pdb
-C:\Users\pedrog3\Downloads\Engine\Engine\Source\x64\Debug\Engine.exe
+C:\Users\Peter\Downloads\VideogameMasterExercises-main\Engine\Source\x64\Debug\Engine.exe
 F:\UPC_Master\EngineMaster\Source\x64\Debug\Engine.exe

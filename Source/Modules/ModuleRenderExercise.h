@@ -1,8 +1,12 @@
 #pragma once
 
 #include "Module.h"
-#include <GL\glew.h>
-#include "../../Source/MathGeoLib_Source/Math/float4x4.h"
+
+#include <GL/glew.h>
+
+#include "..\libs\MathGeoLib\Include\Math\float4x4.h"
+
+#include "..\Model3D.h"
 
 class ModuleRenderExercise : public Module
 {
@@ -14,10 +18,20 @@ public:
 	bool Start();
 	update_status Update();
 
+	float4x4 GetModel() {
+		return m_model;
+	}
+
+	GLuint GetProgram() {
+		return m_program;
+	}
+
+	void SetModel3D(const char* i_modelPath);
+
 private:
-	float4x4 model;
-
-	GLuint vbo;
-	GLuint program;
-
+	GLuint m_vbo;
+	GLuint m_program;
+	Model3D* m_model3D;
+	float4x4 m_model;
 };
+

@@ -1,6 +1,6 @@
 #pragma once
 #include "Module.h"
-#include "../Globals.h"
+#include "..\Globals.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -22,5 +22,5 @@ public:
 private:
 	friend class ModuleEditor;
 
-	void* context;
+	void* m_context;
 };

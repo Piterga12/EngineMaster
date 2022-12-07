@@ -2,8 +2,8 @@
 
 #include <cmath>
 
-#include "imgui.h"
-#include "GL\glew.h"
+#include "./libs/ImGui/Include/imgui.h"
+#include "GL/glew.h"
 #include "SDL.h"
 
 #include "Application.h"

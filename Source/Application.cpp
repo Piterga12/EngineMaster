@@ -71,8 +71,8 @@ update_status Application::Update()
 
 	float timePerFrame = 0.f;
 
-	if (0 < WinFps.GetFps())
-		timePerFrame = 1000.f / WinFps.GetFps();
+	if (0 < GetFps())
+		timePerFrame = 1000.f / GetFps();
 	//PERSLOG("%f", WinFps.GetFps());
 	if (timePerFrame < DeltaTime) {
 		for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
@@ -100,4 +100,11 @@ bool Application::CleanUp()
 
 int Application::GetDeltaTime() {
 	return DeltaTime;
+}
+float Application::GetFps() {
+	return MaxFps;
+}
+void Application::SetFps(float numFps) {
+	MaxFps = numFps;
+
 }

@@ -1,15 +1,12 @@
 #include "ModuleEditor.h"
-
-#include <string>
-
 #include "..\Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 
 #include "..\WindowImgui.h"
-
 #include "../libs/ImGui/include/imgui_impl_opengl3.h"
 #include "../libs/ImGui/include/imgui_impl_sdl.h"
+#include <string>
 
 WindowImgui winIm;
 
@@ -37,7 +34,7 @@ bool ModuleEditor::Start()
 {
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
 	ImGui_ImplOpenGL3_Init("#version 130");
-	
+	controls = false;
 	winIm.Start();
 
 	return true;
@@ -55,37 +52,38 @@ update_status ModuleEditor::PreUpdate()
 update_status ModuleEditor::Update()
 {
 	bool tabs;
-	//Creating the tabs for FPS, Hardware, and Model info
-	if (ImGui::Begin(FpsTab.c_str(), &tabs, ImGuiWindowFlags_AlwaysAutoResize)) {
-		ImGui::Text("The actual FrameRate is:");
-	}
-	ImGui::End();
+	//Creating the tabs
 	winIm.Update();
 
-	if (ImGui::Begin(ModelTab.c_str(), &tabs, ImGuiWindowFlags_AlwaysAutoResize)) {
-		ImGui::Text("This is just a debug2");
+	if (controls == true) {
+		if (ImGui::Begin(ControlsTab.c_str(), &tabs, ImGuiWindowFlags_AlwaysAutoResize)) {
+			ImGui::Text("Move the camera with W,A,S,D,Q,E\n");
+			ImGui::Text("Rotate the camera while pressing SPACE moving the mouse\n");
+			ImGui::Text("Change the 3D Model by dropping the new one from models folder\n");
+		}
+		ImGui::End();
 	}
-	ImGui::End();
+	
 
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
-			if (ImGui::MenuItem("FileInfo")) {}
-
-			if (ImGui::MenuItem("BasicInfo2")) {}
+			if (ImGui::MenuItem("FileInfo")) {} //Doesn't do anything
 
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Edit")) {
-			if (ImGui::MenuItem("BasicInfo")) {}
+		if (ImGui::BeginMenu("Help")) {
+			if (ImGui::MenuItem("Controls")) {
+				controls = true;
+			}
 
-			if (ImGui::MenuItem("BasicInfo2")) {}
+			if (ImGui::MenuItem("Github Repository")) {
+				ShellExecuteA(NULL, "open", "https://github.com/Piterga12/EngineMaster", NULL, NULL, SW_SHOWNORMAL);
+			}
 
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("View")) {
-			if (ImGui::MenuItem("BasicInfo")) {}
-
-			if (ImGui::MenuItem("BasicInfo2")) {}
+		if (ImGui::BeginMenu("Exit")) {
+			return UPDATE_STOP;
 
 			ImGui::EndMenu();
 		}
@@ -123,7 +121,6 @@ bool ModuleEditor::CleanUp()
 	return true;
 }
 
-void ModuleEditor::SetTargetModel(const Model3D* i_model)
+void ModuleEditor::SetTargetModel(const Model* i_model)
 {
-	//m_model->SetModel(i_model);
 }

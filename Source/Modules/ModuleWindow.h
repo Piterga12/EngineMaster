@@ -15,10 +15,18 @@ public:
 	virtual ~ModuleWindow();
 	bool Init();
 	bool CleanUp();
-
-public:
+	update_status Update();
 	SDL_Window* window = NULL;
 	SDL_Surface* ScreenSurface = NULL;
+
+	bool IsFullscreen();
+	void SetFullscreen(bool fs);
+	float GetBrightness();
+	void SetBrightness(float sb);
+
+private:
+	bool fullScreen = false;
+	
 };
 
 #endif

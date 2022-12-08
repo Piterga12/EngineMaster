@@ -3,7 +3,7 @@
 #include "Module.h"
 #include <string>
 
-#include "../Model3D.h"
+#include "../Model.h"
 
 class ModuleEditor : public Module
 {
@@ -17,11 +17,10 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-	void SetTargetModel(const Model3D* model);
+	void SetTargetModel(const Model* model);
 
 private:
-	std::string FpsTab = "FPS";
-	std::string ModelTab = "Model Information";
-
+	bool controls;
+	std::string ControlsTab = "Controls";
 };
 

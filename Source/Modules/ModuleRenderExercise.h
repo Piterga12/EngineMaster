@@ -6,7 +6,7 @@
 
 #include "..\libs\MathGeoLib\Include\Math\float4x4.h"
 
-#include "..\Model3D.h"
+#include "..\Model.h"
 
 class ModuleRenderExercise : public Module
 {
@@ -31,7 +31,7 @@ public:
 private:
 	GLuint m_vbo;
 	GLuint m_program;
-	Model3D* m_model3D;
+	Model* m_model3D;
 	float4x4 m_model;
 };
 

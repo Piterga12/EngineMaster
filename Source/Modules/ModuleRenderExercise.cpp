@@ -6,11 +6,11 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleTexture.h"
-#include "..\Model3D.h"
+#include "..\Model.h"
 #include "ModuleEditor.h"
 
-#define VERT_SHADER "default_vertex.glsl"
-#define FRAG_SHADER "default_fragment.glsl"
+#define VERT_SHADER "VertexShader.glsl"
+#define FRAG_SHADER "FragmentShader.glsl"
 
 ModuleRenderExercise::ModuleRenderExercise()
 {
@@ -38,7 +38,7 @@ bool ModuleRenderExercise::Start()
 			float4x4::identity,
 			float3(1.0f));
 
-	m_model3D = Model3D::LoadFromFile(Model3D::s_modelFolderPath + "BakerHouse.fbx");
+	m_model3D = Model::LoadFile(Model::FolderPath + "BakerHouse.fbx");
 	App->editor->SetTargetModel(m_model3D);
 
 	return true;
@@ -54,6 +54,6 @@ update_status ModuleRenderExercise::Update()
 
 void ModuleRenderExercise::SetModel3D(const char* i_modelPath)
 {
-	m_model3D = Model3D::LoadFromFile(i_modelPath);
+	m_model3D = Model::LoadFile(i_modelPath);
 	App->editor->SetTargetModel(m_model3D);
 }

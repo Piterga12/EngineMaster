@@ -7,12 +7,10 @@ ModuleWindow::ModuleWindow()
 {
 }
 
-// Destructor
 ModuleWindow::~ModuleWindow()
 {
 }
 
-// Called before render is available
 bool ModuleWindow::Init()
 {
 	bool ret = true;
@@ -27,7 +25,7 @@ bool ModuleWindow::Init()
 		int height = SCREEN_HEIGHT;
 		Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
-		if(FULLSCREEN == true)
+		if(FULLSCREEN == true || fullScreen == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
@@ -46,11 +44,19 @@ bool ModuleWindow::Init()
 
 	return ret;
 }
+update_status ModuleWindow::Update() {
+	if (fullScreen) { 
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); 
+	}
+	else {
+		SDL_SetWindowFullscreen(window, SDL_FALSE);
+	}
 
-// Called before quitting
+	return UPDATE_CONTINUE;
+}
+
 bool ModuleWindow::CleanUp()
 {
-	//Destroy window
 	if(window != NULL)
 	{
 		SDL_DestroyWindow(window);
@@ -58,5 +64,20 @@ bool ModuleWindow::CleanUp()
 
 	SDL_Quit();
 	return true;
+}
+
+bool ModuleWindow::IsFullscreen() {
+	return fullScreen;
+}
+
+void ModuleWindow::SetFullscreen(bool fs) {
+	fullScreen = fs;
+}
+float ModuleWindow::GetBrightness() {
+	return SDL_GetWindowBrightness(window);
+}
+
+void ModuleWindow::SetBrightness(float sb) {
+	SDL_SetWindowBrightness(window, sb);
 }
 

@@ -27,6 +27,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 	int GetDeltaTime();
+	float GetFps();
+	void SetFps(float numFps);
 
 	ModuleRender* renderer = nullptr;
 	ModuleWindow* window = nullptr;
@@ -41,6 +43,7 @@ public:
 private:
 	std::list<Module*> modules;
 
+	float MaxFps = 60;
 	int PrevTime = 0;
 	int DeltaTime = 0;
 };

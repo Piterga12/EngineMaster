@@ -11,22 +11,13 @@ public:
 	WindowImgui();
 	~WindowImgui();
 
-	float GetFps() {
-		return MaxFps;
-	}
-
-	void SetFps(float numFps) {
-		MaxFps = numFps;
-	}
-
 	void Start();
 	update_status Update();
 
 protected:
-	float MaxFps = 60.0f;
-
 	std::string FpsTab = "FPS";
 	std::string HwTab = "HardWare";
+	std::string WinTab = "Window";
 
 	std::vector<float> FpsHist;
 	int FpsCaptures = 100;
@@ -34,7 +25,7 @@ protected:
 
 	std::string SdlVersion;
 	std::string CpusAndCache;
-	std::string Ram;
+	float Ram;
 	std::string GpuVendor;
 	std::string GpuBrand;
 };

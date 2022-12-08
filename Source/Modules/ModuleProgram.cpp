@@ -45,10 +45,10 @@ std::string ModuleProgram::ReadShaderFile(const std::string& i_fileName)
 	return fileContents;
 }
 
-GLuint ModuleProgram::CompileShader(GLenum i_shaderType, const std::string& i_shaderSource)
+GLuint ModuleProgram::CompileShader(GLenum Type, const std::string& Source)
 {
-	GLuint shaderID = glCreateShader(i_shaderType);
-	const char* sourceAsChars = i_shaderSource.c_str();
+	GLuint shaderID = glCreateShader(Type);
+	const char* sourceAsChars = Source.c_str();
 	glShaderSource(shaderID, 1, &sourceAsChars, 0);
 	glCompileShader(shaderID);
 
@@ -67,11 +67,11 @@ GLuint ModuleProgram::CompileShader(GLenum i_shaderType, const std::string& i_sh
 	return shaderID;
 }
 
-GLuint ModuleProgram::CreateProgram(GLuint i_vertexShader, GLuint i_fragmentShader)
+GLuint ModuleProgram::CreateProgram(GLuint vertexShader, GLuint fragmentShader)
 {
 	GLuint programID = glCreateProgram();
-	glAttachShader(programID, i_vertexShader);
-	glAttachShader(programID, i_fragmentShader);
+	glAttachShader(programID, vertexShader);
+	glAttachShader(programID, fragmentShader);
 	glLinkProgram(programID);
 
 	int res = GL_FALSE;
@@ -87,7 +87,7 @@ GLuint ModuleProgram::CreateProgram(GLuint i_vertexShader, GLuint i_fragmentShad
 			free(info);
 		}
 	}
-	glDeleteShader(i_vertexShader);
-	glDeleteShader(i_fragmentShader);
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 	return programID;
 }

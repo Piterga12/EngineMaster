@@ -16,7 +16,7 @@ public:
 
 private:
 	std::string ReadShaderFile(const std::string& i_fileName);
-	GLuint CompileShader(GLenum i_shaderType, const std::string& i_shaderSource);
-	GLuint CreateProgram(GLuint i_vertexShader, GLuint i_fragmentShader);
+	GLuint CompileShader(GLenum Type, const std::string& Source);
+	GLuint CreateProgram(GLuint vertexShader, GLuint fragmentShader);
 };
 

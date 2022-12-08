@@ -2,6 +2,7 @@
 #include "..\Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
 #include "SDL.h"
 #include "GL/glew.h"
 #include "ModuleEditor.h"
@@ -10,12 +11,10 @@ ModuleRender::ModuleRender()
 {
 }
 
-// Destructor
 ModuleRender::~ModuleRender()
 {
 }
 
-// Called before render is available
 bool ModuleRender::Init()
 {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -24,6 +23,7 @@ bool ModuleRender::Init()
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 
 	context = SDL_GL_CreateContext(App->window->window);
 	GLenum err = glewInit();
@@ -37,17 +37,14 @@ bool ModuleRender::Init()
 
 update_status ModuleRender::PreUpdate()
 {
-	int window_width, window_height;
-	SDL_GetWindowSize(App->window->window, &window_width, &window_height);
-	glViewport(0, 0, window_width, window_height);
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glViewport(0, 0, App->camera->GetWidthWindow(), App->camera->GetHeightWindow());
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::Update()
 {
-
 	return UPDATE_CONTINUE;
 }
 

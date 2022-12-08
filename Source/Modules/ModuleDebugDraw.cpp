@@ -6,7 +6,7 @@
 #include "SDL.h"
 
 #define DEBUG_DRAW_IMPLEMENTATION
-#include "..\DebugDraw.h"     // Debug Draw API. Notice that we need the DEBUG_DRAW_IMPLEMENTATION macro here!
+#include "..\DebugDraw.h"
 
 #include "GL/glew.h"
 
@@ -14,11 +14,6 @@ class DDRenderInterfaceCoreGL final
     : public dd::RenderInterface
 {
 public:
-
-    //
-    // dd::RenderInterface overrides:
-    //
-
     void drawPointList(const dd::DrawVertex * points, int count, bool depthEnabled) override
     {
         assert(points != nullptr);
@@ -582,7 +577,7 @@ const char * DDRenderInterfaceCoreGL::textFragShaderSrc = "\n"
     "    out_FragColor.a = texture(u_glyphTexture, v_TexCoords).r;\n"
     "}\n";
 
-DDRenderInterfaceCoreGL* ModuleDebugDraw::s_implementation = 0;
+DDRenderInterfaceCoreGL* ModuleDebugDraw::implementation = 0;
 
 ModuleDebugDraw::ModuleDebugDraw() 
 {
@@ -594,8 +589,8 @@ ModuleDebugDraw::~ModuleDebugDraw()
 
 bool ModuleDebugDraw::Init()
 {
-    s_implementation = new DDRenderInterfaceCoreGL;
-    dd::initialize(s_implementation);
+    implementation = new DDRenderInterfaceCoreGL;
+    dd::initialize(implementation);
     return true;
 }
 
@@ -604,8 +599,8 @@ bool ModuleDebugDraw::CleanUp()
 {
     dd::shutdown();
 
-    delete s_implementation;
-    s_implementation = 0;
+    delete implementation;
+    implementation = 0;
 
     return true;
 }
@@ -618,11 +613,11 @@ update_status  ModuleDebugDraw::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleDebugDraw::Draw(const float4x4& i_view, const float4x4& i_proj, unsigned i_width, unsigned i_height)
+void ModuleDebugDraw::Draw(const float4x4& iView, const float4x4& iProj, unsigned iWidth, unsigned iHeight)
 {
-    s_implementation->width     = i_width;
-    s_implementation->height    = i_height;
-    s_implementation->mvpMatrix = i_proj * i_view;
+    implementation->width     = iWidth;
+    implementation->height    = iHeight;
+    implementation->mvpMatrix = iProj * iView;
 
     dd::axisTriad(float4x4::identity, 0.1f, 1.0f);
     dd::xzSquareGrid(-10, 10, 0.0f, 1.0f, dd::colors::Gray);

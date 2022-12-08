@@ -17,10 +17,7 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-	void WindowResized(unsigned i_width, unsigned i_height);
-
+	void* context;
 private:
-	friend class ModuleEditor;
-
-	void* m_context;
+	
 };

@@ -18,8 +18,6 @@ public:
 	void Draw();
 
 private:
-	friend class WindowModel3D;
-
 	Model3D(std::string i_fileName);
 
 	static bool CheckValidFormat(const std::string& i_fileName);

@@ -11,23 +11,23 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-	glDeleteBuffers(1, &m_vbo);
-	glDeleteBuffers(1, &m_ebo);
-	glDeleteBuffers(1, &m_vao);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteBuffers(1, &VAO);
 }
 
-Mesh* Mesh::LoadMesh(const aiMesh* i_mesh)
+Mesh* Mesh::LoadMesh(const aiMesh* modelMesh)
 {
 	Mesh* mesh = new Mesh();
-	mesh->m_materialIndex = i_mesh->mMaterialIndex;
-	mesh->m_numTriangles = i_mesh->mNumFaces;
-	mesh->LoadVBO(i_mesh);
-	mesh->LoadEBO(i_mesh);
+	mesh->m_materialIndex = modelMesh->mMaterialIndex;
+	mesh->m_numTriangles = modelMesh->mNumFaces;
+	mesh->LoadVBO(modelMesh);
+	mesh->LoadEBO(modelMesh);
 	mesh->CreateVAO();
 	return mesh;
 }
 
-void Mesh::Draw(const std::vector<GLuint>& i_modelTextures)
+void Mesh::Draw(const std::vector<GLuint>& textureModel)
 {
 	GLuint program = App->rendererExercise->GetProgram();
 	const float4x4& view = App->camera->GetView();
@@ -35,80 +35,79 @@ void Mesh::Draw(const std::vector<GLuint>& i_modelTextures)
 	float4x4 model = float4x4::identity;
 	
 	glUseProgram(program);
-	
 	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, (const float*)&model);
 	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, (const float*)&view);
 	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, (const float*)&proj);
 	
 	glActiveTexture(GL_TEXTURE5);
-	glBindTexture(GL_TEXTURE_2D, i_modelTextures[m_materialIndex]);
+	glBindTexture(GL_TEXTURE_2D, textureModel[m_materialIndex]);
 	glUniform1i(glGetUniformLocation(program, "diffuse"), 0);
 	
-	glBindVertexArray(m_vao);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glDrawElements(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, nullptr);
 }
 
-void Mesh::LoadVBO(const aiMesh* i_mesh)
+void Mesh::LoadVBO(const aiMesh* modelMesh)
 {
-	glGenBuffers(1, &m_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	
 	GLuint vertex_size = (sizeof(float) * 3 + sizeof(float) * 2);
-	GLuint buffer_size = vertex_size * i_mesh->mNumVertices;
+	GLuint buffer_size = vertex_size * modelMesh->mNumVertices;
 	
 	glBufferData(GL_ARRAY_BUFFER, buffer_size, nullptr, GL_STATIC_DRAW);
 	
-	GLuint position_size = sizeof(float) * 3 * i_mesh->mNumVertices;
+	GLuint position_size = sizeof(float) * 3 * modelMesh->mNumVertices;
 	
-	glBufferSubData(GL_ARRAY_BUFFER, 0, position_size, i_mesh->mVertices);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, position_size, modelMesh->mVertices);
 	
 	GLuint uv_offset = position_size;
-	GLuint uv_size = sizeof(float) * 2 * i_mesh->mNumVertices;
+	GLuint uv_size = sizeof(float) * 2 * modelMesh->mNumVertices;
 	
 	float2* uvs = (float2*)(glMapBufferRange(GL_ARRAY_BUFFER, uv_offset, uv_size, GL_MAP_WRITE_BIT));
 	
-	for (int i = 0; i < i_mesh->mNumVertices; ++i)
+	for (int i = 0; i < modelMesh->mNumVertices; ++i)
 	{
-		uvs[i] = float2(i_mesh->mTextureCoords[0][i].x, i_mesh->mTextureCoords[0][i].y);
+		uvs[i] = float2(modelMesh->mTextureCoords[0][i].x, modelMesh->mTextureCoords[0][i].y);
 	}
 	
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 	
-	m_numVertices = i_mesh->mNumVertices;
+	m_numVertices = modelMesh->mNumVertices;
 }
 
-void Mesh::LoadEBO(const aiMesh* i_mesh)
+void Mesh::LoadEBO(const aiMesh* modelMesh)
 {
-	glGenBuffers(1, &m_ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	
-	GLuint index_size = sizeof(GLuint) * i_mesh->mNumFaces * 3;
+	GLuint index_size = sizeof(GLuint) * modelMesh->mNumFaces * 3;
 	
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_size, nullptr, GL_STATIC_DRAW);
 	
 	GLuint* indices = (GLuint*)(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY));
 	
-	for (int i = 0; i < i_mesh->mNumFaces; ++i)
+	for (int i = 0; i < modelMesh->mNumFaces; ++i)
 	{
-		assert(i_mesh->mFaces[i].mNumIndices == 3); // note: assume triangles = 3 indices per face
-		*(indices++) = i_mesh->mFaces[i].mIndices[0];
-		*(indices++) = i_mesh->mFaces[i].mIndices[1];
-		*(indices++) = i_mesh->mFaces[i].mIndices[2];
+		assert(modelMesh->mFaces[i].mNumIndices == 3);
+		*(indices++) = modelMesh->mFaces[i].mIndices[0];
+		*(indices++) = modelMesh->mFaces[i].mIndices[1];
+		*(indices++) = modelMesh->mFaces[i].mIndices[2];
 	}
 	
 	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 	
-	m_numIndices = i_mesh->mNumFaces * 3;
+	m_numIndices = modelMesh->mNumFaces * 3;
 }
 
 void Mesh::CreateVAO()
 {
-	glGenVertexArrays(1, &m_vao);
+	glGenVertexArrays(1, &VAO);
 	
-	glBindVertexArray(m_vao);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);

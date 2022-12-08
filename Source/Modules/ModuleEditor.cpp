@@ -35,7 +35,7 @@ bool ModuleEditor::Init()
 
 bool ModuleEditor::Start()
 {
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->m_context);
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 	
 	winIm.Start();

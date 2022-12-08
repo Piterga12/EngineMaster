@@ -34,8 +34,10 @@ Model3D* Model3D::LoadFromFile(const std::string& i_fileName)
 	std::string filePath = i_fileName;
 	const aiScene* scene = aiImportFile(filePath.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	
+
 	if (scene)
 	{
+		PERSLOG("%s", i_fileName);
 		model->LoadMaterials(scene);
 		if (model->m_textures.size() != scene->mNumMaterials) {
 			aiReleaseImport(scene);
@@ -73,6 +75,7 @@ void Model3D::Draw()
 void Model3D::LoadMaterials(const aiScene* i_scene)
 {
 	aiString file;
+	PERSLOG("%i", i_scene->mNumMaterials)
 
 	m_textures.reserve(i_scene->mNumMaterials);
 

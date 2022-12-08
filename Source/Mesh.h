@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 #include "./assimp/scene.h"
 #include "GL/glew.h"
@@ -9,22 +8,19 @@ class Mesh
 public:
 	~Mesh();
 
-	static Mesh* LoadMesh(const aiMesh* i_mesh);
-
-	void Draw(const std::vector<GLuint>& i_modelTextures);
+	static Mesh* LoadMesh(const aiMesh* modelMesh);
+	void Draw(const std::vector<GLuint>& textureModel);
 
 private:
-	friend class WindowModel3D;
-
 	Mesh();
 
-	void LoadVBO(const aiMesh* i_mesh);
-	void LoadEBO(const aiMesh* i_mesh);
+	void LoadVBO(const aiMesh* modelMesh);
+	void LoadEBO(const aiMesh* modelMesh);
 	void CreateVAO();
 
-	GLuint m_vbo;
-	GLuint m_ebo;
-	GLuint m_vao;
+	GLuint VBO;
+	GLuint EBO;
+	GLuint VAO;
 
 	int m_materialIndex;
 	int m_numVertices;

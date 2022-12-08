@@ -1,15 +1,14 @@
 #include "..\Globals.h"
 #include "..\Application.h"
 #include "ModuleInput.h"
-
-#include "ModuleRender.h"
-#include "ModuleWindow.h"
-#include "ModuleCamera.h"
-#include "ModuleEditor.h"
-#include "ModuleRenderExercise.h"
-
 #include "../SDL/include/SDL.h"
 #include "../libs/ImGui/include/imgui_impl_sdl.h"
+
+#include "ModuleWindow.h"
+#include "ModuleRender.h"
+#include "ModuleRenderExercise.h"
+#include "ModuleCamera.h"
+#include "ModuleEditor.h"
 
 ModuleInput::ModuleInput()
 {}
@@ -19,91 +18,89 @@ ModuleInput::~ModuleInput()
 
 bool ModuleInput::Init()
 {
-	bool ret = true;
 	SDL_Init(0);
-
-	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
-	{
-		ret = false;
-	}
-
-	return ret;
+	return true;
 }
 
 update_status ModuleInput::Update()
 {
-    SDL_Event sdlEvent;
-
+    SDL_Event event;
     char* dropfileDir;
-
-    while (SDL_PollEvent(&sdlEvent) != 0)
+    
+    while (SDL_PollEvent(&event) != 0)
     {
-        ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
-        switch (sdlEvent.type)
-        {
-            case SDL_QUIT:
+        ImGui_ImplSDL2_ProcessEvent(&event);
+
+        if (SDL_WINDOWEVENT == event.type) {
+            if (event.window.event == SDL_WINDOWEVENT_CLOSE) {
                 return UPDATE_STOP;
-            case SDL_WINDOWEVENT:
-                if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED || sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) 
-                    App->renderer->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
-                if (sdlEvent.window.event == SDL_WINDOWEVENT_CLOSE)
-                    return UPDATE_STOP;
-                break;
-            case SDL_DROPFILE:
-                dropfileDir = sdlEvent.drop.file;
-                App->rendererExercise->SetModel3D(dropfileDir);
-                break;
+            }
+        }     
+        else if (SDL_QUIT == event.type) {
+            return UPDATE_STOP;
+        } 
+
+        //For dropping new models to scene
+        if (SDL_DROPFILE == event.type) {
+            dropfileDir = event.drop.file;
+            App->rendererExercise->SetModel3D(dropfileDir);
         }
     }
 
     keyBoard = SDL_GetKeyboardState(NULL);
-    int deltaTime = App->GetDeltaTime();
+    int time = App->GetDeltaTime();
 
     //For camera move
-    float3 deltaPosVec = float3::zero;
-    float cameraSpeed = 0.02f;
-    if (keyBoard[SDL_SCANCODE_LSHIFT])
-        cameraSpeed *= 2;
-    float deltaPos = cameraSpeed * deltaTime;
+    float3 newPos = float3::zero;
+    float velocityCam = 0.02f;
+    if (keyBoard[SDL_SCANCODE_LSHIFT]) {
+        velocityCam = 0.04;
+    }
+    float velTime = velocityCam * time;
 
     if (keyBoard[SDL_SCANCODE_W]) {
-        deltaPosVec.x += deltaPos;
-    }
-    if (keyBoard[SDL_SCANCODE_S]) {
-        deltaPosVec.x -= deltaPos;
-    }
-    if (keyBoard[SDL_SCANCODE_Q]) {
-        deltaPosVec.y += deltaPos;
-    }
-    if (keyBoard[SDL_SCANCODE_E]) {
-        deltaPosVec.y -= deltaPos;
-    }
-    if (keyBoard[SDL_SCANCODE_D]) {
-        deltaPosVec.z += deltaPos;
+        newPos.x += velTime;
     }
     if (keyBoard[SDL_SCANCODE_A]) {
-        deltaPosVec.z -= deltaPos;
+        newPos.z -= velTime;
     }
-    App->camera->Translate(deltaPosVec);
+    if (keyBoard[SDL_SCANCODE_S]) {
+        newPos.x -= velTime;
+    }
+    if (keyBoard[SDL_SCANCODE_D]) {
+        newPos.z += velTime;
+    }
+    if (keyBoard[SDL_SCANCODE_Q]) {
+        newPos.y += velTime;
+    }
+    if (keyBoard[SDL_SCANCODE_E]) {
+        newPos.y -= velTime;
+    }
+    App->camera->Move(newPos);
 
     //For camera rotation
-    float3 deltaRot = float3::zero;
-    float angleSpeed = 0.005f;
-    float deltaAngle = angleSpeed * deltaTime;
+    float3 newRot = float3::zero;
+    float angleSpeed = 0.001f;
+    float deltaAngle = angleSpeed * time;
 
-    if (keyBoard[SDL_SCANCODE_LEFT]) {
-        deltaRot.y += deltaAngle;
+    if (keyBoard[SDL_SCANCODE_SPACE]) {
+        if (SDL_MOUSEMOTION == event.type) {
+            if (event.button.x < (App->camera->GetWidthWindow() / 2) - (App->camera->GetWidthWindow() / 10)) { //We add this weird adding/substract to leave some space
+                newRot.y += deltaAngle;                                                                        //in the middles
+            }
+            if (event.button.x > (App->camera->GetWidthWindow() / 2) + (App->camera->GetWidthWindow() / 10)) {
+                newRot.y -= deltaAngle;
+            }
+            if (event.button.y < (App->camera->GetHeightWindow() / 2) - (App->camera->GetHeightWindow() / 10)) {
+                newRot.x += deltaAngle;
+            }
+            if (event.button.y > (App->camera->GetHeightWindow() / 2) + (App->camera->GetHeightWindow() / 10) ) {
+                newRot.x -= deltaAngle;
+            }
+        }
     }
-    if (keyBoard[SDL_SCANCODE_RIGHT]) {
-        deltaRot.y -= deltaAngle;
-    }
-    if (keyBoard[SDL_SCANCODE_UP]) {
-        deltaRot.x += deltaAngle;
-    }
-    if (keyBoard[SDL_SCANCODE_DOWN]) {
-        deltaRot.x -= deltaAngle;
-    }
-    App->camera->Rotate(deltaRot);
+
+    App->camera->Rotate(newRot);
 
     return UPDATE_CONTINUE;
 }

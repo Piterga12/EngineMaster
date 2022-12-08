@@ -19,7 +19,6 @@ bool ModuleCamera::Start()
 	frustum.SetPos(float3(0.0f, 3.0f, 5.0f));
 	frustum.SetFront(-float3::unitZ);
 	frustum.SetUp(float3::unitY);
-
 	frustum.SetViewPlaneDistances(0.1f, 100.0f);
 
 	int weidth, height;
@@ -33,29 +32,32 @@ bool ModuleCamera::Start()
 
 update_status ModuleCamera::Update()
 {
-	int weidth, height;
-	SDL_GetWindowSize(App->window->window, &weidth, &height);
-	aspectRatio = ((float)weidth) / ((float)height);
+	aspectRatio = (GetWidthWindow()) / (GetHeightWindow());
 	frustum.SetHorizontalFovAndAspectRatio(fovRads, aspectRatio);
 
 	return UPDATE_CONTINUE;
 }
 
-float4x4 ModuleCamera::GetProjection() {
-	return frustum.ProjectionMatrix();
+//For getting the actual screen size
+float ModuleCamera::GetWidthWindow() {
+	int width, height;
+	SDL_GetWindowSize(App->window->window, &width, &height);
+	return (float)width;
 }
-float4x4 ModuleCamera::GetView() {
-	return frustum.ViewMatrix();
+float ModuleCamera::GetHeightWindow() {
+	int width, height;
+	SDL_GetWindowSize(App->window->window, &width, &height);
+	return (float)height;
 }
 
-void ModuleCamera::Translate(float3 i_deltaCoords)
+void ModuleCamera::Move(float3 newCoord)
 {
-	float3 deltaCoordsWithRespectFront = frustum.Front().Mul(i_deltaCoords);
+	float3 deltaCoordsWithRespectFront = frustum.Front().Mul(newCoord);
 
 	float3 translationColumn = float3::zero;
-	translationColumn += frustum.Front().Normalized() * i_deltaCoords.x;
-	translationColumn += float3::unitY * i_deltaCoords.y;
-	translationColumn += frustum.WorldRight().Normalized() * i_deltaCoords.z;
+	translationColumn += frustum.Front().Normalized() * newCoord.x;
+	translationColumn += float3::unitY * newCoord.y;
+	translationColumn += frustum.WorldRight().Normalized() * newCoord.z;
 
 	float4x4 translationMat = float4x4(float3x4(float3x3::identity, translationColumn));
 
@@ -87,5 +89,12 @@ void ModuleCamera::Rotate(float3 i_thetasRad)
 
 	frustum.SetFront(newLook);
 	frustum.SetUp(newUp);
+}
+//For Mesh
+float4x4 ModuleCamera::GetProjection() {
+	return frustum.ProjectionMatrix();
+}
+float4x4 ModuleCamera::GetView() {
+	return frustum.ViewMatrix();
 }
 

@@ -47,17 +47,14 @@ HRESULT ModuleTexture::LoadImageFromFile(const std::string& i_texturePathInModel
     std::string textureName = GetImageNameFromPath(i_texturePathInModel);
     DirectX::ScratchImage image;
     
-    //try loading path in FBX
     HRESULT res = TryLoadingImage(texturePath, image);
 
     if (FAILED(res)) {
-        //try loading in the same folder as the model
         texturePath = i_modelPath + textureName;
         res = TryLoadingImage(texturePath, image);
     }
 
     if (FAILED(res)) {
-        //try loading in textures folder
         texturePath = s_textureFolderPath + textureName;
         res = TryLoadingImage(texturePath, image);
     }

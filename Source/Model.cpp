@@ -76,7 +76,7 @@ void Model::Draw()
 void Model::LoadMaterials(const aiScene* scene)
 {
 	aiString file;
-	//PERSLOG("%i", scene->mNumMaterials)
+	PERSLOG("%i", scene->mNumMaterials)
 
 	textures.reserve(scene->mNumMaterials);
 

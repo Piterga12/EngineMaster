@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\External\assimp;..\External\assimp\assimp\Compiler;..\External\assimp\assimp;..\External\DirectXTex\DirectXTex-oct2022;..\External\MathGeoLib\Include\;..\External\MathGeoLib\Include\Time;..\External\MathGeoLib\Include\Math;..\External\MathGeoLib\Include\Geometry;..\External\MathGeoLib\Include\Algorithm;..\External\MathGeoLib\Include\Algorithm\Random;..\External\ImGui\Include\MainSource;..\External\ImGui\Include\GlueCode;.\glew-2.1.0\include\GL;.\SDL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\libs\DirectXTex\DirectXTex-oct2022;.\Modules;.\libs\glew-2.1.0\include;.\libs\ImGui;.\libs\DirectXTex;.\libs\assimp;.\SDL\include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -141,7 +141,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\External\assimp\lib;..\External\DirectXTex\DirectXTex-oct2022\DirectXTex\Bin\Desktop_2019_Win10\x64\Debug;.\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\libs\assimp\lib;.\libs\DirectXTex\DirectXTex\Bin\Desktop_2019_Win10\x64\Release;.\libs\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>assimp-vc142-mt.lib;DirectXTex.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -404,6 +404,7 @@
     <ClInclude Include="WindowImgui.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="C:\Users\Peter\Downloads\DarkSideEngine_v1.0.0\LICENSE.md" />
     <None Include="libs\assimp\assimp\color4.inl" />
     <None Include="libs\assimp\assimp\material.inl" />
     <None Include="libs\assimp\assimp\matrix3x3.inl" />

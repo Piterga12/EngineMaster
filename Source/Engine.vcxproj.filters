@@ -389,5 +389,6 @@
     <None Include="libs\MathGeoLib\Include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="libs\MathGeoLib\Include\Math\float2.inl" />
     <None Include="libs\MathGeoLib\Include\Math\Matrix.inl" />
+    <None Include="C:\Users\Peter\Downloads\DarkSideEngine_v1.0.0\LICENSE.md" />
   </ItemGroup>
 </Project>
